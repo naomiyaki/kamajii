@@ -1,0 +1,44 @@
+{
+  "name": "Kamajii 2019",
+  "version": "1.0.0",
+  "description": "Kamajii is a minimal Electron Boilerplate with Parcel Pre-Compiled React, SCSS, and DevTool Extensions ready to go",
+  "main": "main.js",
+  "scripts": {
+    "dev": "parcel ./index.html -d build/",
+    "start": "cross-env ELECTRON_START_URL=http://localhost:1234 NODE_ENV=development electron .",
+    "start-build": "electron .",
+    "build": "parcel build ./index.html -d build/ --public-url ./",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "build": {
+    "appId": "com.kamajii.app",
+    "mac": {
+      "category": "public.app-category.developer"
+    },
+    "files": [
+      "main.js",
+      "build/*"
+    ]
+  },
+  "dependencies": {
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "cross-env": "^5.2.1",
+    "dotenv": "^8.1.0",
+    "electron": "^6.0.7",
+    "electron-builder": "^21.2.0",
+    "electron-reload": "^1.5.0",
+    "parcel-bundler": "^1.12.3",
+    "sass": "^1.23.0-module.beta.1"
+  },
+  "author": "Naomi Rubin",
+  "license": "MIT"
+}
