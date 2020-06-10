@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron');
+const {app, BrowserWindow, ipcMain} = require('electron');
 const path = require('path');
 
 function createWindow () {
@@ -11,7 +11,7 @@ function createWindow () {
       // Preload script can be used to add Node variables if node integration is turned off
       // https://www.electronjs.org/docs/api/process#event-loaded
       // preload: path.join(__dirname, 'preload.js')
-      // nodeIntegration: true
+      nodeIntegration: true
     }
   });
 
@@ -20,7 +20,7 @@ function createWindow () {
   console.log(app.getAppPath());
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 }
 
 // This method will be called when Electron has finished
@@ -47,3 +47,6 @@ app.on('window-all-closed', function () {
 // code. You can also put them in separate files and require them here.
 
 // Test IPC to ensure module bundling doesn't conflict with node integration
+ipcMain.on('ipc-active', (e, testObject) => {
+  console.log('Message Recieved from ipcRenderer:', testObject);
+});

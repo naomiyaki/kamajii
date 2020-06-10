@@ -33,5 +33,9 @@
     "parcel": "^2.0.0-alpha.3.2",
     "sass": "^1.26.8",
     "trash-cli": "^3.0.0"
+  },
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   }
 }
