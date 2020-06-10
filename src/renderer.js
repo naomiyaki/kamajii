@@ -6,23 +6,15 @@
 // is turned on, optionally globals can be selectively added in
 // "preload.js"
 
-// Instantiate react app in main index.html
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-// import Process from './components/Process';
-
-// ReactDOM.render(
-//   <Process/>,
-//   document.getElementById('renderer')
-// );
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ipcRenderer } from 'electron';
 import Process from './components/Process';
 
+// Send sample Ipc message to main process
 ipcRenderer.send('ipc-active', {name: "Sample"});
 
+// Instantiate react app in main index.html
 ReactDOM.render(
     <Process/>,
     document.getElementById('renderer')

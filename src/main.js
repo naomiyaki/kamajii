@@ -11,13 +11,16 @@ function createWindow () {
       // Preload script can be used to add Node variables if node integration is turned off
       // https://www.electronjs.org/docs/api/process#event-loaded
       // preload: path.join(__dirname, 'preload.js')
+      // Node integration allows imports to be called inside renderer processes
+      // This is fine for initial development, but isn't always secure in production
+      // especially if accessing any external sources
       nodeIntegration: true
     }
   });
 
   // and load the index.html of the app.
-  mainWindow.loadFile('./build/index.html');
-  console.log(app.getAppPath());
+  // Kamajii uses "bundle", because "build" and "dist" are both used by electron-builder
+  mainWindow.loadFile('./bundle/index.html');
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools()

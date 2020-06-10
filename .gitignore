@@ -1,7 +1,8 @@
+.DS_Store
 node_modules
 package-lock.json
 .parcel-cache
 .cache
 .env
-build
+bundle
 dist
