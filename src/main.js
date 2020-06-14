@@ -8,13 +8,14 @@ function createWindow () {
     width: 800,
     height: 600,
     webPreferences: {
-      // Preload script can be used to add Node variables if node integration is turned off
+      // Context Isolation provides a separate secure context
+      // for exposed node methods, will be default from Electron 12 on
+      // https://www.electronjs.org/docs/tutorial/context-isolation
+      contextIsolation: true,
+      // Preload script can be used to add global node variables and
+      // securely pass Electron/Node methods to be used in renderer
       // https://www.electronjs.org/docs/api/process#event-loaded
-      // preload: path.join(__dirname, 'preload.js')
-      // Node integration allows imports to be called inside renderer processes
-      // This is fine for initial development, but isn't always secure in production
-      // especially if accessing any external sources
-      nodeIntegration: true
+      preload: path.join(__dirname, 'preload.js')
     }
   });
 
@@ -60,6 +61,6 @@ app.on('window-all-closed', function () {
 // code. You can also put them in separate files and require them here.
 
 // Test IPC to ensure module bundling doesn't conflict with node integration
-ipcMain.on('ipc-active', (e, testObject) => {
-  console.log('Message Recieved from ipcRenderer:', testObject);
+ipcMain.on('to-main', (e, testObject) => {
+  console.log('Message Recieved from Renderer:', testObject);
 });

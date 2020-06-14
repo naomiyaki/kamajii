@@ -7,7 +7,7 @@
   "targets": {
     "renderer": {
       "publicUrl": "./",
-      "context": "electron-renderer"
+      "context": "browser"
     }
   },
   "scripts": {

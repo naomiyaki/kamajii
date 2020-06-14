@@ -8,11 +8,10 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ipcRenderer } from 'electron';
 import Process from './components/Process';
 
 // Send sample Ipc message to main process
-ipcRenderer.send('ipc-active', {name: "Sample"});
+window.electron.ipcSend('to-main', {name: "Sample"});
 
 // Instantiate react app in main index.html
 ReactDOM.render(
