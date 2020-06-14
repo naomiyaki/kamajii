@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <title>Kamajii 2020 - Electron</title>
     <link rel="stylesheet" href="assets/stylesheets/index.scss"/>
+    <!-- 
+      In order to use hot-reloading for development, 
+      the following content security policy is required instead of the secure one below
+      DO NOT package for production with this Content Security Policy:
+      <meta http-equiv="Content-Security-Policy" content="default-src 'self' ws://localhost:*; script-src 'self' 'unsafe-eval'">
+
+      Note that until Parcel 2's '--no-hot' option is added, 
+      HMRRuntime (hot module replacement) will show an error in development only
+      But this is only an HMR error and doesn't effect app code/rendering
+    -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
   </head>
