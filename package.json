@@ -1,7 +1,7 @@
 {
   "name": "kamajii",
   "version": "2.0.0",
-  "description": "Kamajii is a minimal Electron Boilerplate with Parcel Pre-Compiled React, SCSS, and DevTool Extensions ready to go",
+  "description": "Kamajii is a minimal Electron Boilerplate with Parcel (2.0) Pre-Compiled React, SCSS, and DevTool Extensions ready to go",
   "main": "./src/main.js",
   "renderer": "./bundle/index.html",
   "targets": {
@@ -12,12 +12,15 @@
   },
   "scripts": {
     "start": "electron .",
-    "bundle": "run-s s-rm-build s-bundle",
+    "dev": "run-p p-dev-bundle p-dev-start",
+    "bundle": "run-s s-rm-bundle s-bundle",
     "pack": "run-s s-rm-pack s-pack",
     "dist": "electron-builder",
+    "p-dev-bundle": "parcel ./src/index.html --target renderer",
+    "p-dev-start": "cross-env DEV_SERVER=true electron .",
     "s-rm-pack": "trash dist",
     "s-pack": "electron-builder --dir",
-    "s-rm-build": "trash bundle, .parcel-cache",
+    "s-rm-bundle": "trash bundle, .parcel-cache",
     "s-bundle": "parcel build ./src/index.html --target renderer"
   },
   "build": {
@@ -29,6 +32,7 @@
   "author": "Naomi Rubin",
   "license": "MIT",
   "devDependencies": {
+    "cross-env": "^7.0.2",
     "electron": "^9.0.3",
     "electron-builder": "^22.7.0",
     "npm-run-all": "^4.1.5",

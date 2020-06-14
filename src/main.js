@@ -19,11 +19,21 @@ function createWindow () {
   });
 
   // and load the index.html of the app.
-  // Kamajii uses "bundle", because "build" and "dist" are both used by electron-builder
-  mainWindow.loadFile('./bundle/index.html');
+  if (process.env.DEV_SERVER === 'true') {
+    // If dev server is running, run bundled files from there
+    // Currently these are in a 'dist' file because this isn't configurable by Parcel 2 (yet!)
+    // But should be in a future update
+    mainWindow.loadURL('http://localhost:1234');
+  } else {
+    // Otherwise run from Parcel packaged bundle
+    // Kamajii uses "bundle", because "build" and "dist" are both used by electron-builder
+    mainWindow.loadFile('./bundle/index.html');
+  }
 
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  // Open the DevTools if the app isn't being run from a built package.
+  if (!app.isPackaged) {
+    mainWindow.webContents.openDevTools()
+  }
 }
 
 // This method will be called when Electron has finished
