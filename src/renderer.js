@@ -11,7 +11,13 @@ import ReactDOM from 'react-dom';
 import Process from './components/Process';
 
 // Send sample Ipc message to main process
-window.electron.ipcSend('to-main', {name: "Sample"});
+// Using secure generated function
+window.electron.sendToMain({message: "secure"}).then((result) => {
+    console.log(result);
+});
+
+// Using inseure passed function
+// window.electron.ipcSend('to-main', {name: "Sample"});
 
 // Instantiate react app in main index.html
 ReactDOM.render(

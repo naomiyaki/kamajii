@@ -60,7 +60,8 @@ app.on('window-all-closed', function () {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
-// Test IPC to ensure module bundling doesn't conflict with node integration
-ipcMain.on('to-main', (e, testObject) => {
-  console.log('Message Recieved from Renderer:', testObject);
+// Test IPC to ensure preloaded objects
+ipcMain.handle('to-main', async(e, data) => {
+  console.log(`Message recieved from renderer: "${data.message}"`);
+  return `Message returned from main: "${data.message}"`;
 });

@@ -1,4 +1,5 @@
-// List of ipcChannels for backend validation
-module.exports = [
-    'to-main'
-];
+// List of ipcChannels for backend validation 
+// with their function names
+module.exports = {
+    sendToMain: 'to-main'
+};

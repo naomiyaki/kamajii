@@ -12,16 +12,16 @@
   },
   "scripts": {
     "start": "electron .",
-    "dev": "run-p p-dev-bundle p-dev-start",
-    "bundle": "run-s s-rm-bundle s-bundle",
-    "pack": "run-s s-rm-pack s-pack",
+    "dev": "run-p dev-bundle dev-start",
+    "bundle": "run-s bundle-trash bundle-build",
+    "pack": "run-s pack-trash pack-build",
     "dist": "electron-builder",
-    "p-dev-bundle": "parcel ./src/index.html --target renderer",
-    "p-dev-start": "cross-env DEV_SERVER=true electron .",
-    "s-rm-pack": "trash dist",
-    "s-pack": "electron-builder --dir",
-    "s-rm-bundle": "trash bundle, .parcel-cache",
-    "s-bundle": "parcel build ./src/index.html --target renderer"
+    "dev-bundle": "parcel ./src/index.html --target renderer",
+    "dev-start": "cross-env DEV_SERVER=true electron .",
+    "pack-trash": "trash dist",
+    "pack-build": "electron-builder --dir",
+    "bundle-trash": "trash bundle .parcel-cache",
+    "bundle-build": "parcel build ./src/index.html --target renderer"
   },
   "build": {
     "appId": "com.kamajii.app",

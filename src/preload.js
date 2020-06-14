@@ -11,15 +11,17 @@
 const { contextBridge, ipcRenderer } = require('electron');
 const validChannels = require('./ipc-channels');
 
+// Instead of directly exposing methods like invoke or send, individual
+// methods are generated based on the list in ipc-channels 
+// so the renderer cannot access ipc methods arbitrarily.
+const ipcMethods = {}
+Object.keys(validChannels).forEach((key) => {
+  ipcMethods[key] = (data) => ipcRenderer.invoke(validChannels[key], data);
+});
+
+// This is just an example of how to expose these, if you're using send/recieve
+// you could build separate generators, or if you're just building some internal thing
+// that doesn't need security, you could just expose the methods you need
 contextBridge.exposeInMainWorld(
-  "electron", {
-    ipcSend: (channel, data) => {
-      // For security, channels can be validated
-      // against a list, this is disabled for
-      // initial development but provided for future use
-      if (validChannels.includes(channel)) {
-        ipcRenderer.send(channel, data);
-      }
-    }
-  }
+  "electron", ipcMethods
 )
