@@ -6,3 +6,5 @@ package-lock.json
 .env
 bundle
 dist
+dev-tool-extensions/*
+!dev-tool-extensions/.gitkeep

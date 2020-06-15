@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow, ipcMain} = require('electron');
+const {app, BrowserWindow, ipcMain, session} = require('electron');
 const path = require('path');
 
 function createWindow () {
@@ -24,6 +24,8 @@ function createWindow () {
     // If dev server is running, run bundled files from there
     // Currently these are in a 'dist' file because this isn't configurable by Parcel 2 (yet!)
     // But should be in a future update
+
+    // This is using the default Parcel host/port
     mainWindow.loadURL('http://localhost:1234');
   } else {
     // Otherwise run from Parcel packaged bundle
@@ -33,7 +35,7 @@ function createWindow () {
 
   // Open the DevTools if the app isn't being run from a built package.
   if (!app.isPackaged) {
-    mainWindow.webContents.openDevTools()
+    mainWindow.webContents.openDevTools();
   }
 }
 
@@ -49,6 +51,18 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   })
 });
+
+// To use Dev Tool Extensions (like React/Redux), download/copy the extension
+// into the dev-tool-extensions folder (see README). 
+
+// Also note that currently, Electron 9 will throw warnings if these are enabled,
+// and they only load predictably when rendering via URL 
+// with (parcel dev server, in this case). 
+// https://github.com/electron/electron/issues/23662
+// app.on('ready', async () => {
+//   await session.defaultSession.loadExtension(path.join(__dirname, '../dev-tool-extensions/react'));
+//   await session.defaultSession.loadExtension(path.join(__dirname, '../dev-tool-extensions/redux'));
+// })
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
