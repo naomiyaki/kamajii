@@ -16,7 +16,7 @@
     "bundle": "run-s bundle-trash bundle-build",
     "pack": "run-s pack-trash pack-build",
     "dist": "electron-builder",
-    "dev-bundle": "parcel ./src/index.html --target renderer",
+    "dev-bundle": "parcel src/index.html --target renderer",
     "dev-trash": "trash dist .parcel-cache",
     "dev-start": "cross-env DEV_SERVER=true electron .",
     "pack-trash": "trash dist",

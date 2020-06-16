@@ -16,10 +16,12 @@ export default class Process extends PureComponent {
 
   render() {
     return(
-      <div className="process">
+      <div className="process-sample">
         {'Hi! This is a React Component ⚛️'}
         <div className="counter">
-          {this.state.counter}
+          <h3 className="counter">
+            {`Counter: ${this.state.counter}`}
+          </h3>
           <button onClick={() => { this.incrementCounter(1) }}>
             {'+ 1'}
           </button>
