@@ -16,9 +16,6 @@ window.electron.sendToMain({message: "secure"}).then((result) => {
     console.log(result);
 });
 
-// Using inseure passed function
-// window.electron.ipcSend('to-main', {name: "Sample"});
-
 // Instantiate react app in main index.html
 ReactDOM.render(
     <Process/>,
