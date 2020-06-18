@@ -14,6 +14,10 @@ export default class Process extends PureComponent {
     });
   }
 
+  testClassPropertyMethod = (event) => {
+    console.log(this.state, event);
+  }
+
   render() {
     return(
       <div className="process-sample">
@@ -29,6 +33,11 @@ export default class Process extends PureComponent {
             {'- 1'}
           </button>
         </div>
+        <p className="property-link">
+          <a href="#" onClick={this.testClassPropertyMethod}>
+            {'Class Property Methods'}
+          </a>{' work too.'}
+        </p>
       </div>
     );
   }

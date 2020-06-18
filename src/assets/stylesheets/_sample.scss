@@ -3,7 +3,9 @@ $neutral00: #F9F9FA;
 $neutral05: #ECDEDE;
 $neutral60: #3D2F34;
 
-$displayWidth00: 320px; 
+$displayWidth00: 320px;
+$accent00: pink;
+$accent20:  rgb(201, 125, 138);
 
 // Sample Styles
 body {
@@ -22,7 +24,7 @@ body {
 }
 
 .app-name {
-    color: pink;
+    color: $accent00;
 }
 
 .process-sample {
@@ -50,6 +52,16 @@ body {
             transform: translate(0, 3px);
             box-shadow: 0 2px $neutral60;
         }
+    }
+}
+
+.property-link {
+    margin-top: 1em;
+    font-size: 0.85em;
+    
+    a {
+        color: $accent20;
+        text-decoration: none;
     }
 }
 
