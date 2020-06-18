@@ -12,20 +12,20 @@
   },
   "scripts": {
     "start": "electron .",
-    "dev": "npm-run-all -s trash-temp -p dev-bundle dev-start",
-    "bundle": "run-s trash-bundle bundle-build",
-    "pack": "run-s trash-temp bundle-build pack-build",
-    "dist": "run-s trash-temp bundle-build dist-build",
-    "bundle-trash": "trash bundle .parcel-cache",
-    "trash-temp": "trash bundle dist .parcel-cache",
+    "dev": "npm-run-all -s temp-trash -p dev-bundle dev-start",
+    "bundle": "run-s bundle-trash bundle-build",
+    "pack": "run-s temp-trash bundle-build pack-build",
+    "dist": "run-s temp-trash bundle-build dist-build",
+    "temp-trash": "trash bundle dist .parcel-cache",
     "dev-bundle": "parcel src/index.html --target renderer",
     "dev-start": "cross-env DEV_SERVER=true electron .",
     "bundle-build": "parcel build ./src/index.html --target renderer",
+    "bundle-trash": "trash bundle .parcel-cache",
     "pack-build": "electron-builder --dir",
     "dist-build": "electron-builder"
   },
   "build": {
-    "appId": "com.kamajii.app",
+    "appId": "com.electron.kamajii",
     "mac": {
       "category": "public.app-category.developer-tools"
     }
