@@ -29,9 +29,9 @@ I think there are two ways to use an Electron starter.
 Maybe this isn't your first Electron app and you're like. Parcel! React! All of this - let's just get going! OK buckaroo, here's how you do that:
 
 - Download or clone this repo to your machine.  
-`git clone https://gitlab.com/naomiyaki/kamajii-2020.git`
+`git clone https://gitlab.com/naomiyaki/kamajii.git`
 - Hop into your terminal and cd into the directory.  
-`cd kamajii-2020`
+`cd kamajii`
 - Install all the Node dependencies  
 `npm install` or `yarn install`
 - Either bundle and run the built app with these two commands or...  
