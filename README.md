@@ -4,14 +4,14 @@ ___
 
 ![Gif of Kamajii the boiler at work from Spirited Away](https://media.giphy.com/media/ljPMWcS0zdSpCOk3gE/giphy.gif)
 
-Kamajii 2020 Alpha has been rebuilt from the ground-up to work with Electron 9 and [Parcel 2.0 (in alpha)](#parcel-2-bundling). It is configugred out of the box with [React](#react-built-in), [Sass](#sass), [secure ipc communication](#secure-ipc-communication), and [BYO DevTool Extension suppport](#drop-in-dev-tool-setup).
+Kamajii 2020 Alpha has been rebuilt from the ground-up to work with Electron 9 and [Parcel 2.0 (in alpha)](#parcel-2-bundling). It is configured out of the box with [React](#react-built-in), [Sass](#sass), [secure ipc communication](#secure-ipc-communication), and [BYO DevTool Extension suppport](#drop-in-dev-tool-setup).
 
 ## 🖌 Let's Make a Desktop App!
 Kamajii is a boilerplate or starter-kit for [Electron](https://github.com/electron/electron): GitHub's framework for building cross platform apps using JavaScript and other web technologies.
 
-[TLDR I'm ready to go!!!](#Using-Kamajii-as-a-drop-in-boilerplate-for-getting-started-fast)
+[TLDR I'm ready to go!!!](#using-Kamajii-as-a-drop-in-boilerplate-for-getting-started-fast!)
 
-Electron already has a [very good quick-start-app](https://github.com/electron/electron-quick-start), but Javascript apps often have a next-step in the setup that involves installing a bundler, and a UI library like React or Vue. For Electron, there are a couple more things that go in this next step like setting up build commands, secure access to global node methods, and dev-tool extensions. That's where a starter kit like Kamajii can help.
+Electron already has a [very good quick-start-app](https://github.com/electron/electron-quick-start), but Javascript apps often have a next-step in the setup that involves installing a bundler, and a UI library like React or Vue. For Electron, there are a couple more things that go in this next step like setting up build commands, secure access to global Node methods, and dev-tool extensions. That's where a starter kit like Kamajii can help.
 
 There are [plenty of great Electron starter kits](https://github.com/sindresorhus/awesome-electron#boilerplates) out there already, but Electron and the world of bundlers move fast. I made this one specifically to work with Parcel 2, which has little documentation on getting started with Electron. So if you're doing that, I hope this repo and the documentation are a helpful guide for you 💖
 
@@ -32,7 +32,7 @@ Maybe this isn't your first Electron app and you're like. Parcel! React! All of 
 `git clone https://gitlab.com/naomiyaki/kamajii-2020.git`
 - Hop into your terminal and cd into the directory.  
 `cd kamajii-2020`
-- Install all the node dependencies  
+- Install all the Node dependencies  
 `npm install` or `yarn install`
 - Either bundle and run the built app with these two commands or...  
 `npm run bundle` then `npm start`
@@ -50,7 +50,7 @@ The walkthroughs in the rest of this guide are for you!
 ## Feature Walkthrough
 The bulk of the documentation is written as comments in the code itself - this walkthrough briefly goes through each feature as well as where you can find the code.
 
-The guide assumes you have node setup on your machine and know how to access code via the terminal and your editor of choice. It's not meant to be a beginner's guide to Electron as there is [plenty of documentation for that](https://www.electronjs.org/docs), but if you need further help getting started, feel free to reach out!
+The guide assumes you have Node setup on your machine and know how to access code via the terminal and your editor of choice. It's not meant to be a beginner's guide to Electron as there is [plenty of documentation for that](https://www.electronjs.org/docs), but if you need further help getting started, feel free to reach out!
 
 ### Package.json
 Since package.json can't really contain comments, here is a quick rundown of Kamajii's setup. Note that this explanation isn't in the same order as the file itself.
@@ -60,6 +60,7 @@ Since package.json can't really contain comments, here is a quick rundown of Kam
 ```
 This is the entry point for the app when running in development.
 
+#### Scripts
 ```
 "scripts": {
     "start": "electron .",
@@ -72,7 +73,7 @@ This is the entry point for the app when running in development.
 }
 ```
 
-That's a LOT of scripts*, but don't worry, you'll only really use one of them for development and a couple other for bundling and packaging the app.
+That's a LOT of scripts, but don't worry, you'll only really use one of them for development and a couple other for bundling and packaging the app.
 
 - `npm run bundle` and then `npm start` (or `npm run start`)  
 📦 This will bundle the code with Parcel and then open the app from the command line using your bundled files. Subsequent changes you make to files will not show up in the app until you bundle and start again.
@@ -88,6 +89,7 @@ This will package the app as an executable for your current OS using [Electron B
 - `npm run dist`  
 This will package the app as an application installer for your current OS using [Electron Builder](https://www.electron.build/). Make sure to run `npm run bundle` before doing this if you haven't already bundled your code.
 
+#### Main Parcel Commands
 ```
     "dev-bundle": "parcel src/index.html --target renderer",
     ...
@@ -95,8 +97,9 @@ This will package the app as an application installer for your current OS using 
 ```
 You never have to run `dev-bundle` or `bundle-build` on their own (they is run as part of `dev` and `bundle` respectively), but they're useful to point out because this is the main Parcel command. It passes the renderer endpoint `src/index.html` to Parcel and also flags a "target" called "renderer."
 
-*The reason there are so many scripts is because Kamajii uses npm-run-all to consolidate multiple smaller scripts into one. Every other script in `package.json` is one of these smaller scripts.
+##### The reason there are so many scripts is because Kamajii uses npm-run-all to consolidate multiple smaller scripts into one. Every other script in `package.json` is one of these smaller scripts.
 
+#### Minimal Parcel Configuration
 ```
   "renderer": "./bundle/index.html",
   "targets": {
@@ -112,19 +115,20 @@ In other words
 `parcel src/index.html renderer` -> becomes -> `"renderer": "./bundle/index.html"`  
 And Parcel figures out pretty much everything from there.
 
-In this context "renderer" is what [Parcel calls a "target"](https://github.com/parcel-bundler/parcel#targets) and we need to set it up as such in `package.json` in the `"targets:"` object by creating an object `"renderer": {` with a matching name.* This is also where we setup any additional configuration for the target. It's not clear what the default configs are at this time.
+In this context "renderer" is what [Parcel calls a "target"](https://github.com/parcel-bundler/parcel#targets) and we need to set it up as such in `package.json` in the `"targets:"` object by creating an object `"renderer": {` with a matching name. This is also where we setup any additional configuration for the target. It's not clear what the default configs are at this time.
 
 `"publicUrl": "./",`  
 This tells Parcel to look in the current directory for the bundle when its running. The dev-server works without this, but it's necessary for the static bundle.
 
 `"context": "browser"`  
-My understanding is that this tells Parcel to bundle files for a browser based JS app (as opposed to a node module or something). The documentation isn't super clear on exactly the what/how here.  
+My understanding is that this tells Parcel to bundle files for a browser based JS app (as opposed to a Node module or something). The documentation isn't super clear on exactly the what/how here.  
 There is actually an "electron-renderer" context available in Parcel 2, but it assumes the use of import/require, which is turned off by default (and left off in Kamajii for security). Of course, you can still use `import` all the same with the "browser" context, because Parcel will bundle your modules just like it would for the browser.
 
-⚠️ Bug time: The Parcel build command will put the built files into `bundle/` as expected, but the dev-server puts them into a `dist/` folder, no matter what. While this doesn't break dev mode or anything, it is a major issue in this case because `dist/` is also where Electron Builder saves packaged versions of the application.
+#### ⚠️ Bug time 
+The Parcel build command will put the built files into `bundle/` as expected, but the dev-server puts them into a `dist/` folder, no matter what. While this doesn't break dev mode or anything, it is a major issue in this case because `dist/` is also where Electron Builder saves packaged versions of the application.
 There are already commits in Parcel master to add a "distDir" option to configuration so this should be fixed soon, but in the meantime, make sure to save/backup any Electron Builder dists before you run `dev`, as this script clears out the dist folder before bundling.
 
-*There are some default Parcel targets like "module" and "browser," I'm not sure if you need to define these inside of `"targets":` or not.
+##### There are some default Parcel targets like "module" and "browser," I'm not sure if you need to define these inside of `"targets":` or not.
 
 ```
   "build": {
@@ -149,7 +153,8 @@ Checks whether to get assets from the dev-server or bundle.
 ### Sass
 I really like Sass, and Parcel makes it really easy to just include a file and start building.
 
-⚠️ Bug time: SCSS hot-module reloading is... still a little spotty in Parcel 2. In my testing it works if you are working in a single file, but changes to `include` files will not show until you update your top level `index.scss` type file.
+#### ⚠️ Bug time
+SCSS hot-module reloading is... still a little spotty in Parcel 2. In my testing it works if you are working in a single file, but changes to `include` files will not show until you update your top level `index.scss` type file.
 
 Files:  
 `src/index.html`
@@ -172,7 +177,7 @@ Renders a React component in the main html.
 First sample React component.
 
 ### Secure ipc Communication
-Electron's security is always evolving. In a small, internal app it might be OK to use some node methods right in the renderer, but it's considered insecure to expose this access in general.
+Electron's security is always evolving. In a small, internal app it might be OK to use some Node methods right in the renderer, but it's considered insecure to expose this access in general.
 
 Still, the renderer needs *some way* to get messages back and forth with the main process. So Kamajii has a little script that creates single-purpose ipc messaging promises based on a simple object (You can also add your own methods, of course)!
 
@@ -187,10 +192,10 @@ Contains the script that loads the ipc methods into the renderer. This is also w
 Has an example ipc promise. If this is working, you'll see a message in the Electron/Window console from the main process.
 
 `src/main.js` (line 78)
-Returns a message to the promise in the renderer and also runs code in the main process. If this is working, you'll see a node console log that a message has been recieved from the renderer.
+Returns a message to the promise in the renderer and also runs code in the main process. If this is working, you'll see a Node console log that a message has been recieved from the renderer.
 
 ### Drop-in Dev Tool setup
-Electron recently changed the way Dev Tools are loaded, and you now have to download them to your system somewhere and instantiate them within the app. Kamajii simplifies this a little bit* by providing a folder to put them in, and a couple of sample lines that will load extensions in that folder. By default this is setup for React and Redux, but you should be able to set this up with [any of the extensions listed by Electron](https://www.electronjs.org/docs/tutorial/devtools-extension#supported-devtools-extensions).
+Electron recently changed the way Dev Tools are loaded, and you now have to download them to your system somewhere and instantiate them within the app. Kamajii simplifies this a little bit by providing a folder to put them in, and a couple of sample lines that will load extensions in that folder. By default this is setup for React and Redux, but you should be able to set this up with [any of the extensions listed by Electron](https://www.electronjs.org/docs/tutorial/devtools-extension#supported-devtools-extensions).
 
 The easiest way I've found to download the extension is by installing it in your local version of Google Chrome, then finding the extension files on your system, and putting them into the folder below.
 
@@ -207,7 +212,7 @@ Where to put your downloaded dev tool extensions
 `src/main.js`  
 Has two lines that, if uncommented, will load dev tool extensions that have been named "react" and "redux" from this folder. You can change the names to whatever you need, of course. 
 
-*There is a [node module that does this too](https://www.npmjs.com/package/electron-devtools-installer), but personally I like to just set it and forget it.
+##### There is a [node module that does this too](https://www.npmjs.com/package/electron-devtools-installer), but personally I like to just set it and forget it.
 
 ## 🌌 What's next!
 - ...we wait. Parcel's next release should be coming out soon, so once it does I'll try to implement it in here.
