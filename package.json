@@ -1,6 +1,6 @@
 {
   "name": "kamajii",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Kamajii is a minimal Electron Boilerplate with Parcel (2.0) Pre-Compiled React, SCSS, and DevTool Extensions ready to go",
   "main": "./src/main.js",
   "renderer": "./bundle/index.html",
@@ -12,10 +12,10 @@
   },
   "scripts": {
     "start": "electron .",
-    "dev": "npm-run-all -s temp-trash -p dev-bundle dev-start",
+    "dev": "npm-run-all -s bundle-trash -p dev-bundle dev-start",
     "bundle": "run-s bundle-trash bundle-build",
-    "pack": "run-s temp-trash bundle-build pack-build",
-    "dist": "run-s temp-trash bundle-build dist-build",
+    "pack": "run-s bundle-trash bundle-build pack-build",
+    "dist": "run-s bundle-trash bundle-build dist-build",
     "temp-trash": "trash bundle dist .parcel-cache",
     "dev-bundle": "parcel ./src/index.html --target renderer --dist-dir ./bundle",
     "dev-start": "cross-env DEV_SERVER=true electron .",
