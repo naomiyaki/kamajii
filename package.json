@@ -17,7 +17,7 @@
     "pack": "run-s temp-trash bundle-build pack-build",
     "dist": "run-s temp-trash bundle-build dist-build",
     "temp-trash": "trash bundle dist .parcel-cache",
-    "dev-bundle": "parcel src/index.html --target renderer",
+    "dev-bundle": "parcel ./src/index.html --target renderer --dist-dir ./bundle",
     "dev-start": "cross-env DEV_SERVER=true electron .",
     "bundle-build": "parcel build ./src/index.html --target renderer",
     "bundle-trash": "trash bundle .parcel-cache",
@@ -37,7 +37,7 @@
     "electron": "^9.0.3",
     "electron-builder": "^22.7.0",
     "npm-run-all": "^4.1.5",
-    "parcel": "^2.0.0-alpha.3.2",
+    "parcel": "^2.0.0-beta.1",
     "sass": "^1.26.8",
     "trash-cli": "^3.0.0"
   },
