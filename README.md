@@ -4,7 +4,7 @@ ___
 
 ![Gif of Kamajii the boiler at work from Spirited Away](https://media.giphy.com/media/ljPMWcS0zdSpCOk3gE/giphy.gif)
 
-Kamajii 2020 Alpha has been rebuilt from the ground-up to work with Electron 9 and [Parcel 2.0 (in alpha)](#parcel-2-bundling). It is configured out of the box with [React](#react-built-in), [Sass](#sass), [secure ipc communication](#secure-ipc-communication), and [BYO DevTool Extension suppport](#drop-in-dev-tool-setup).
+Kamajii 2020 Beta has been rebuilt from the ground-up to work with Electron 9 and [Parcel 2.0 (in beta)](#parcel-2-bundling). It is configured out of the box with [React](#react-built-in), [Sass](#sass), [secure ipc communication](#secure-ipc-communication), and [BYO DevTool Extension suppport](#drop-in-dev-tool-setup).
 
 ## 🖌 Let's Make a Desktop App!
 Kamajii is a boilerplate or starter-kit for [Electron](https://github.com/electron/electron): GitHub's framework for building cross platform apps using JavaScript and other web technologies.
@@ -16,9 +16,9 @@ Electron already has a [very good quick-start-app](https://github.com/electron/e
 There are [plenty of great Electron starter kits](https://github.com/sindresorhus/awesome-electron#boilerplates) out there already, but Electron and the world of bundlers move fast. I made this one specifically to work with Parcel 2, which has little documentation on getting started with Electron. So if you're doing that, I hope this repo and the documentation are a helpful guide for you 💖
 
 ## 🚚 Version Caveats
-This repo has been built and tested to create/run a functioning Electron 9 app with React. However, Parcel 2 is still in alpha and has a few warnings and missing features which I'll go over below, so this package is in alpha too. I am also still learning how Parcel's new configurations work with Electron. I'll try to update Kamajii as Parcel 2 reaches beta/final release.
+This repo has been built and tested to create/run a functioning Electron 9 app with React. However, Parcel 2 is still in beta and has a few warnings and missing features which I'll go over below, so consider this package is in beta too. I am also still learning how Parcel's new configurations work with Electron. I'll try to update Kamajii as Parcel 2 reaches additional betas/final release.
 
-While you might not be looking to use an alpha bundler in your project right now, I hope this repo will serve as a sample guide for seting up Parcel 2 with Electron as it evolves.
+While you might not be looking to use a pre-release bundler in your project right now, I hope this repo will serve as a sample guide for seting up Parcel 2 with Electron as it evolves.
 
 I used "2020" in the name because I think it's important to be very deliberate about the timeline for any kind of boilerplate code (especially JS). As of Summer 2020, it's very up-to-date 🎃. If you're reading this a year out or more (or 1+ versions of Electron), it might be time to start fresh with today's modules, or seek out a newer boilerplate.
 
@@ -80,20 +80,20 @@ That's a LOT of scripts, but don't worry, you'll only really use one of them for
 
 - `npm run dev`  
 🚀 This will run Parcel's dev server, and then open the app using dynamically generated files on the server. You can now change any files in the renderer process while the app is open, and it will automatically reload with your changes.  
-Because the dev-server runs in parallel with Electron, it may take a few seconds for Parcel to finish the initial build before you see anything in the app. 
+Because the dev-server runs in parallel with Electron, it may take a few seconds for Parcel to finish the initial build before you see anything in the app.
  Keep in mind that changes to the main process (`main.js`, `preload.js`, etc.) will not cause a reload: you still need to rerun the command for these.
 
 - `npm run pack`  
-This will package the app as an executable for your current OS using [Electron Builder](https://www.electron.build/). Make sure to run `npm run bundle` before doing this if you haven't already bundled your code.
+This will bundle your code with Parcel, and then package the app as an executable for your current OS using [Electron Builder](https://www.electron.build/).
 
 - `npm run dist`  
-This will package the app as an application installer for your current OS using [Electron Builder](https://www.electron.build/). Make sure to run `npm run bundle` before doing this if you haven't already bundled your code.
+This will bundle your code with Parcel, and then package the app as an application installer for your current OS using [Electron Builder](https://www.electron.build/).
 
 #### Main Parcel Commands
 ```
-    "dev-bundle": "parcel src/index.html --target renderer",
+    "dev-bundle": "parcel ./src/index.html --target renderer --dist-dir ./bundle",
     ...
-    "bundle-build": "parcel build ./src/index.html --target renderer",
+    "bundle-build": "parcel build ./src/index.html --target renderer ",
 ```
 You never have to run `dev-bundle` or `bundle-build` on their own (they is run as part of `dev` and `bundle` respectively), but they're useful to point out because this is the main Parcel command. It passes the renderer endpoint `src/index.html` to Parcel and also flags a "target" called "renderer."
 
@@ -124,9 +124,12 @@ This tells Parcel to look in the current directory for the bundle when its runni
 My understanding is that this tells Parcel to bundle files for a browser based JS app (as opposed to a Node module or something). The documentation isn't super clear on exactly the what/how here.  
 There is actually an "electron-renderer" context available in Parcel 2, but it assumes the use of import/require, which is turned off by default (and left off in Kamajii for security). Of course, you can still use `import` all the same with the "browser" context, because Parcel will bundle your modules just like it would for the browser.
 
-#### ⚠️ Bug time 
-The Parcel build command will put the built files into `bundle/` as expected, but the dev-server puts them into a `dist/` folder, no matter what. While this doesn't break dev mode or anything, it is a major issue in this case because `dist/` is also where Electron Builder saves packaged versions of the application.
-There are already commits in Parcel master to add a "distDir" option to configuration so this should be fixed soon, but in the meantime, make sure to save/backup any Electron Builder dists before you run `dev`, as this script clears out the dist folder before bundling.
+#### Bundle directory and the Dev Server
+Starting Kamajii with `npm start dev` will cause Electron to open the renderer code from a dev-server that is storing files inside "./bundle/." If you setup the Content Security Policy inside `src/index.html` for development (see index.html for instructions), any changes made to the Javascript will be instantly re-bundled and reloaded inside Electron! This is called "Hot Module Reloading" or "HMR."
+
+By default, Parcel saves bundled files in a "dist/" directory, but since Electron Builder saves packaged versions of the application there, Kamajii is seutup to use a "bundle/" directory instead. For development, the --dist-dir option configures this, so you can save development files and production bundled files in separate places if you want. 
+
+In testing, files bundled for development don't work without HMR warnings in production, so running bundle or any of the app packaging commands always removes "bundle/" and re-bundles your renderer code before building. As of the Beta-1 update, no commands will automatically delete the "dist" folder, but there is still a `temp-trash` command in package.json if you want to delete **all** temporary/built files.
 
 ##### There are some default Parcel targets like "module" and "browser," I'm not sure if you need to define these inside of `"targets":` or not.
 
@@ -150,11 +153,14 @@ Parcel has some minimal configuration for this Electron build-out (see above)
 `src/main.js`  
 Checks whether to get assets from the dev-server or bundle.
 
+`index.html`  
+[Hot module reloading](#bundle-directory-and-the-dev-server) requires a differenct content-security-policy for development, so you'll want to adjust this for long dev sessions.
+
 ### Sass
 I really like Sass, and Parcel makes it really easy to just include a file and start building.
 
 #### ⚠️ Bug time
-SCSS hot-module reloading is... still a little spotty in Parcel 2. In my testing it works if you are working in a single file, but changes to `include` files will not show until you update your top level `index.scss` type file.
+SCSS hot-module reloading is... still a little spotty in Parcel 2. In my testing it works if you are working in a single file, but changes to `include` files will not show until you update your top level `index.scss` type file. I'm hoping it's addressed soon!
 
 Files:  
 `src/index.html`
@@ -167,7 +173,7 @@ Sass root file. Also includes normalize and some scss for the sample app.
 `src/assets/_normalize.scss`
 
 ### React built in
-You should see a React app up and running when you start Kamajii!
+You should see a React app up and running when you start Kamajii! There's a little sample component for you to modify and test.
 
 Files:  
 `src/renderer.js`  
@@ -215,7 +221,7 @@ Has two lines that, if uncommented, will load dev tool extensions that have been
 ##### There is a [node module that does this too](https://www.npmjs.com/package/electron-devtools-installer), but personally I like to just set it and forget it.
 
 ## 🌌 What's next!
-- ...we wait. Parcel's next release should be coming out soon, so once it does I'll try to implement it in here.
+- ...we wait. Parcel's Beta-1 was just released, so it may be a couple months before the next one, but once it does I'll try to implement it in here.
 
 - CSS Modules? If [SCSS reloading](#sass) doesn't get fixed soon, I may explore this as an alternative.
 
