@@ -2,7 +2,7 @@
 A minimal Electron 9 Boilerplate with Parcel (2.0!) Pre-Compiled React, SCSS, and other common configurations ready to go
 ___
 
-![Gif of Kamajii the boiler at work from Spirited Away](https://media.giphy.com/media/ljPMWcS0zdSpCOk3gE/giphy.gif)
+![Gif of Kamajii the boiler at work from Spirited Away](readme.gif)
 
 Kamajii 2020 Beta has been rebuilt from the ground-up to work with Electron 9 and [Parcel 2.0 (in beta)](#parcel-2-bundling). It is configured out of the box with [React](#react-built-in), [Sass](#sass), [secure ipc communication](#secure-ipc-communication), and [BYO DevTool Extension suppport](#drop-in-dev-tool-setup).
 
